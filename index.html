@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prospera Nacional - Controle de Ações e Prestação de Contas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/estilo.css">
+</head>
+<body>
+
+<header class="cabecalho">
+  <div class="marca">PROSPERA NACIONAL</div>
+  <p class="subtitulo">Controle de Ações e Prestação de Contas</p>
+</header>
+
+<main class="container">
+
+  <section class="cartao">
+    <p class="texto-explicativo">
+      Registre cada ação, acompanhe a documentação e verifique o status
+      da prestação de contas dos núcleos ativos do Prospera Nacional.
+    </p>
+
+    <div class="atalhos">
+      <a href="cadastrar.html" class="botao botao-primario">Cadastrar ação</a>
+      <button type="button" id="botaoConsultarAcoes" class="botao botao-secundario">Consultar ações</button>
+    </div>
+
+    <div id="avisoConsultar" class="aviso" role="status" aria-live="polite">
+      Disponível em breve.
+    </div>
+  </section>
+
+  <section class="cartao">
+    <div class="rotulo-secao">Resumo geral</div>
+
+    <div id="areaResumo" class="grade-resumo" aria-live="polite">
+      <div class="metrica metrica-total">
+        <div class="numero" id="numeroTotal">-</div>
+        <div class="rotulo">Cadastradas</div>
+      </div>
+      <div class="metrica metrica-aberto">
+        <div class="numero" id="numeroAberto">-</div>
+        <div class="rotulo">Em Aberto</div>
+      </div>
+      <div class="metrica metrica-conferencia">
+        <div class="numero" id="numeroConferencia">-</div>
+        <div class="rotulo">Em Conferência</div>
+      </div>
+      <div class="metrica metrica-corrigir">
+        <div class="numero" id="numeroCorrigir">-</div>
+        <div class="rotulo">Precisa Corrigir</div>
+      </div>
+      <div class="metrica metrica-pronta">
+        <div class="numero" id="numeroPronta">-</div>
+        <div class="rotulo">Prontas</div>
+      </div>
+    </div>
+
+    <div id="avisoResumo" class="aviso" role="status" aria-live="polite"></div>
+  </section>
+
+</main>
+
+<script src="config.js"></script>
+<script src="js/api.js"></script>
+<script src="js/inicio.js"></script>
+</body>
+</html>

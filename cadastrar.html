@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cadastrar ação - Prospera Nacional</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/estilo.css">
+</head>
+<body>
+
+<header class="cabecalho">
+  <a href="index.html" class="marca-link"><div class="marca">PROSPERA NACIONAL</div></a>
+  <p class="subtitulo">Cadastrar ação</p>
+</header>
+
+<main class="container">
+
+  <!-- ============ TELA 1: FORMULARIO EM 3 ETAPAS ============ -->
+  <section id="telaFormulario" class="cartao">
+
+    <div id="avisoConfiguracao" class="mensagem-erro-geral oculto">
+      Não foi possível carregar os núcleos e as OS agora. Atualize a página para tentar novamente.
+    </div>
+
+    <div class="stepper" id="stepper">
+      <div class="passo ativo" data-passo="1">
+        <div class="bolha">1</div>
+        <div class="rotulo-passo">Identificação</div>
+      </div>
+      <div class="passo" data-passo="2">
+        <div class="bolha">2</div>
+        <div class="rotulo-passo">Execução</div>
+      </div>
+      <div class="passo" data-passo="3">
+        <div class="bolha">3</div>
+        <div class="rotulo-passo">Resultados</div>
+      </div>
+    </div>
+
+    <!-- ETAPA 1 - IDENTIFICACAO -->
+    <div class="etapa-formulario ativa" id="etapa1" data-etapa="1">
+
+      <div class="campo" id="campoWrapperNucleo">
+        <label for="campoNucleo">Núcleo</label>
+        <select id="campoNucleo">
+          <option value="">Selecione o núcleo</option>
+        </select>
+        <div class="mensagem-erro-campo">Selecione um núcleo.</div>
+      </div>
+
+      <div class="linha-campos">
+        <div class="campo">
+          <label for="campoEstado">Estado</label>
+          <input type="text" id="campoEstado" readonly placeholder="Preenchido automaticamente">
+        </div>
+        <div class="campo">
+          <label for="campoCidade">Cidade</label>
+          <input type="text" id="campoCidade" readonly placeholder="Preenchido automaticamente">
+        </div>
+      </div>
+
+      <div class="campo" id="campoWrapperResponsavel">
+        <label for="campoResponsavel">Responsável</label>
+        <input type="text" id="campoResponsavel" placeholder="Nome de quem está cadastrando">
+        <div class="mensagem-erro-campo">Informe o nome do responsável.</div>
+      </div>
+
+      <div class="campo" id="campoWrapperOS">
+        <label for="campoOS">OS</label>
+        <select id="campoOS">
+          <option value="">Selecione a OS</option>
+        </select>
+        <div class="mensagem-erro-campo">Selecione uma OS.</div>
+      </div>
+
+      <div class="linha-campos">
+        <div class="campo" id="campoWrapperTipoAcao">
+          <label for="campoTipoAcao">Tipo de ação</label>
+          <input type="text" id="campoTipoAcao" placeholder="Descreva o tipo de ação">
+          <div class="mensagem-erro-campo">Informe o tipo de ação.</div>
+        </div>
+        <div class="campo" id="campoWrapperNomeAcao">
+          <label for="campoNomeAcao">Nome da ação</label>
+          <input type="text" id="campoNomeAcao" placeholder="Nome que identifica a ação">
+          <div class="mensagem-erro-campo">Informe o nome da ação.</div>
+        </div>
+      </div>
+
+      <div class="rodape-form">
+        <button type="button" class="botao botao-destaque" id="botaoContinuarEtapa1">Continuar</button>
+      </div>
+    </div>
+
+    <!-- ETAPA 2 - EXECUCAO -->
+    <div class="etapa-formulario" id="etapa2" data-etapa="2">
+
+      <div class="campo" id="campoWrapperData">
+        <label for="campoData">Data</label>
+        <input type="date" id="campoData">
+        <div class="mensagem-erro-campo">Informe a data da ação.</div>
+      </div>
+
+      <div class="linha-campos">
+        <div class="campo">
+          <label for="campoHoraInicial">Horário inicial</label>
+          <input type="time" id="campoHoraInicial">
+        </div>
+        <div class="campo">
+          <label for="campoHoraFinal">Horário final</label>
+          <input type="time" id="campoHoraFinal">
+        </div>
+      </div>
+
+      <div class="campo">
+        <label for="campoLocal">Local</label>
+        <input type="text" id="campoLocal" placeholder="Onde a ação aconteceu">
+      </div>
+
+      <div class="linha-campos">
+        <div class="campo">
+          <label for="campoChPrevista">Carga horária prevista</label>
+          <input type="number" id="campoChPrevista" min="0" step="0.5" placeholder="Em horas">
+        </div>
+        <div class="campo">
+          <label for="campoChRealizada">Carga horária realizada</label>
+          <input type="number" id="campoChRealizada" min="0" step="0.5" placeholder="Em horas">
+        </div>
+      </div>
+
+      <div class="rodape-form">
+        <button type="button" class="botao botao-secundario" id="botaoVoltarEtapa2">Voltar</button>
+        <button type="button" class="botao botao-destaque" id="botaoContinuarEtapa2">Continuar</button>
+      </div>
+    </div>
+
+    <!-- ETAPA 3 - RESULTADOS -->
+    <div class="etapa-formulario" id="etapa3" data-etapa="3">
+
+      <div class="linha-campos">
+        <div class="campo">
+          <label for="campoMetaPrevista">Meta prevista</label>
+          <input type="number" id="campoMetaPrevista" min="0" placeholder="Número previsto">
+        </div>
+        <div class="campo">
+          <label for="campoInscritos">Inscritos</label>
+          <input type="number" id="campoInscritos" min="0" placeholder="Número de inscritos">
+        </div>
+      </div>
+
+      <div class="campo">
+        <label for="campoParticipantesAtendidos">Participantes efetivamente atendidos</label>
+        <input type="number" id="campoParticipantesAtendidos" min="0" placeholder="Número que de fato participou">
+        <div class="dica-campo">Inscritos e participantes atendidos são números diferentes. Nunca junte os dois.</div>
+      </div>
+
+      <div class="campo">
+        <label for="campoPercentualAlcancado">Percentual alcançado</label>
+        <input type="text" id="campoPercentualAlcancado" class="percentual-destaque" readonly placeholder="Calculado automaticamente">
+      </div>
+
+      <div class="campo">
+        <label for="campoResultado">Resultado</label>
+        <input type="text" id="campoResultado" readonly placeholder="Calculado automaticamente">
+      </div>
+
+      <div class="campo">
+        <label for="campoJustificativa">Justificativa</label>
+        <textarea id="campoJustificativa" placeholder="Se houve alteração, redução ou não atingimento da meta, explique aqui"></textarea>
+      </div>
+
+      <div class="rodape-form">
+        <button type="button" class="botao botao-secundario" id="botaoVoltarEtapa3">Voltar</button>
+        <button type="button" class="botao botao-destaque" id="botaoAbrirConfirmacao">Cadastrar ação</button>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ============ TELA 2: CONFIRMACAO ============ -->
+  <section id="telaConfirmacao" class="cartao oculto">
+    <h2>Confira os dados antes de cadastrar</h2>
+    <div class="resumo-confirmacao" id="resumoConfirmacao"></div>
+    <div class="linha-botoes">
+      <button type="button" class="botao botao-secundario" id="botaoVoltarEditar">Voltar e editar</button>
+      <button type="button" class="botao botao-destaque" id="botaoConfirmarCadastro">Confirmar cadastro</button>
+    </div>
+  </section>
+
+  <!-- ============ TELA 3: RESULTADO (sucesso ou erro) ============ -->
+  <section id="telaResultado" class="cartao oculto">
+
+    <div id="resultadoSucesso" class="painel-resultado sucesso oculto">
+      <div class="icone-status" aria-hidden="true">✓</div>
+      <h2>Ação cadastrada com sucesso.</h2>
+
+      <div class="cartao-status">
+        <div class="linha-resumo"><span class="rotulo">ID da ação</span><span class="valor" id="resultadoId"></span></div>
+        <div class="linha-resumo"><span class="rotulo">Nome</span><span class="valor" id="resultadoNome"></span></div>
+        <div class="linha-resumo"><span class="rotulo">OS</span><span class="valor" id="resultadoOS"></span></div>
+        <div class="linha-resumo"><span class="rotulo">Núcleo</span><span class="valor" id="resultadoNucleo"></span></div>
+        <div class="linha-resumo"><span class="rotulo">Status</span><span class="valor"><span class="selo-status">Em Aberto</span></span></div>
+      </div>
+
+      <button type="button" class="botao botao-primario botao-largura-total" id="botaoAbrirPasta">Abrir pasta no Drive</button>
+
+      <div class="linha-botoes">
+        <button type="button" class="botao botao-secundario" id="botaoCadastrarOutraSucesso">Cadastrar outra ação</button>
+        <button type="button" class="botao botao-secundario" id="botaoVoltarInicioSucesso">Voltar ao início</button>
+      </div>
+    </div>
+
+    <div id="resultadoErro" class="painel-resultado erro oculto">
+      <div class="icone-status" aria-hidden="true">!</div>
+      <h2>Não foi possível cadastrar a ação</h2>
+      <div class="mensagem-erro-geral" id="mensagemErroGeral"></div>
+
+      <div class="linha-botoes">
+        <button type="button" class="botao botao-secundario" id="botaoTentarNovamente">Tentar novamente</button>
+        <button type="button" class="botao botao-secundario" id="botaoVoltarInicioErro">Voltar ao início</button>
+      </div>
+    </div>
+
+  </section>
+
+</main>
+
+<script src="config.js"></script>
+<script src="js/api.js"></script>
+<script src="js/cadastrar.js"></script>
+</body>
+</html>

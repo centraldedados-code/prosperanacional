@@ -1,0 +1,489 @@
+/* =========================================================
+   PROSPERA NACIONAL - ESTILO COMPARTILHADO
+   Paleta e tipografia conforme identidade visual aprovada.
+   ========================================================= */
+
+:root {
+  --azul-principal: #092040;
+  --azul-secundaria: #00B7D7;
+  --amarelo-acento: #ECC203;
+  --cinza-neutro: #EFF1F3;
+  --azul-escuro: #021738;
+  --branco: #FFFFFF;
+
+  --texto-secundario: #5F5E5A;
+  --borda: #B4B2A9;
+  --vermelho-erro: #A32D2D;
+  --fundo-erro: #FCEBEB;
+  --verde-sucesso: #3B6D11;
+  --fundo-sucesso: #EAF3DE;
+
+  --fonte-titulo: 'Montserrat', Arial, sans-serif;
+  --fonte-corpo: 'Open Sans', Arial, sans-serif;
+
+  --raio: 8px;
+  --sombra-card: 0 1px 3px rgba(2, 23, 56, 0.08);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--fonte-corpo);
+  background: var(--cinza-neutro);
+  color: var(--azul-escuro);
+  line-height: 1.5;
+  min-height: 100vh;
+}
+
+h1, h2, h3 {
+  font-family: var(--fonte-titulo);
+  font-weight: 700;
+  margin: 0;
+  color: var(--azul-escuro);
+}
+
+p {
+  margin: 0 0 1rem;
+}
+
+a {
+  color: var(--azul-secundaria);
+}
+
+.container {
+  max-width: 560px;
+  margin: 0 auto;
+  padding: 0 16px 48px;
+}
+
+/* ---------- Cabecalho institucional ---------- */
+
+.cabecalho {
+  background: var(--azul-principal);
+  padding: 28px 20px;
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.cabecalho .marca {
+  color: var(--branco);
+  font-family: var(--fonte-titulo);
+  font-weight: 700;
+  font-size: 22px;
+  letter-spacing: 1px;
+  margin: 0 0 6px;
+}
+
+.cabecalho .subtitulo {
+  color: var(--azul-secundaria);
+  font-family: var(--fonte-titulo);
+  font-weight: 600;
+  font-size: 14px;
+  margin: 0;
+}
+
+.cabecalho a.marca-link {
+  text-decoration: none;
+}
+
+/* ---------- Cartoes ---------- */
+
+.cartao {
+  background: var(--branco);
+  border-radius: 12px;
+  padding: 24px 20px;
+  box-shadow: var(--sombra-card);
+  margin-bottom: 20px;
+}
+
+.texto-explicativo {
+  font-size: 14px;
+  color: var(--azul-escuro);
+}
+
+/* ---------- Botoes ---------- */
+
+.botao {
+  display: inline-block;
+  font-family: var(--fonte-corpo);
+  font-weight: 700;
+  font-size: 14px;
+  padding: 12px 20px;
+  border-radius: var(--raio);
+  border: none;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  transition: opacity 0.15s ease;
+}
+
+.botao:hover {
+  opacity: 0.9;
+}
+
+.botao:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.botao-primario {
+  background: var(--azul-principal);
+  color: var(--branco);
+}
+
+.botao-destaque {
+  background: var(--amarelo-acento);
+  color: var(--azul-escuro);
+}
+
+.botao-secundario {
+  background: var(--cinza-neutro);
+  color: var(--azul-escuro);
+  border: 1px solid var(--borda);
+}
+
+.botao-largura-total {
+  width: 100%;
+}
+
+.linha-botoes {
+  display: flex;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.linha-botoes .botao {
+  flex: 1;
+}
+
+/* ---------- Tela Inicio: atalhos e resumo ---------- */
+
+.atalhos {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.atalhos .botao {
+  flex: 1;
+}
+
+.rotulo-secao {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--texto-secundario);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 10px;
+}
+
+.grade-resumo {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 8px;
+}
+
+.metrica {
+  background: var(--cinza-neutro);
+  border-radius: var(--raio);
+  padding: 12px 6px;
+  text-align: center;
+}
+
+.metrica .numero {
+  font-family: var(--fonte-titulo);
+  font-weight: 700;
+  font-size: 20px;
+  margin-bottom: 4px;
+}
+
+.metrica .rotulo {
+  font-size: 10px;
+  color: var(--texto-secundario);
+  line-height: 1.3;
+}
+
+.metrica-total .numero { color: var(--azul-principal); }
+.metrica-aberto .numero { color: var(--azul-secundaria); }
+.metrica-conferencia .numero { color: var(--amarelo-acento); }
+.metrica-corrigir .numero { color: #D85A30; }
+.metrica-pronta .numero { color: var(--verde-sucesso); }
+
+/* ---------- Mensagem flutuante (avisos rapidos) ---------- */
+
+.aviso {
+  background: var(--branco);
+  border: 1px solid var(--azul-secundaria);
+  color: var(--azul-escuro);
+  border-radius: var(--raio);
+  padding: 12px 16px;
+  font-size: 13px;
+  margin-top: 12px;
+  display: none;
+}
+
+.aviso.visivel {
+  display: block;
+}
+
+/* ---------- Formulario: stepper ---------- */
+
+.stepper {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 24px;
+}
+
+.stepper .passo {
+  flex: 1;
+  text-align: center;
+}
+
+.stepper .bolha {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 6px;
+  font-family: var(--fonte-titulo);
+  font-weight: 700;
+  font-size: 13px;
+  background: var(--cinza-neutro);
+  color: var(--texto-secundario);
+  border: 1px solid var(--borda);
+}
+
+.stepper .rotulo-passo {
+  font-size: 11px;
+  color: var(--texto-secundario);
+  font-weight: 600;
+}
+
+.stepper .passo.ativo .bolha {
+  background: var(--azul-principal);
+  color: var(--branco);
+  border-color: var(--azul-principal);
+}
+
+.stepper .passo.ativo .rotulo-passo {
+  color: var(--azul-principal);
+}
+
+.stepper .passo.concluido .bolha {
+  background: var(--azul-secundaria);
+  color: var(--branco);
+  border-color: var(--azul-secundaria);
+}
+
+/* ---------- Formulario: campos ---------- */
+
+.etapa-formulario {
+  display: none;
+}
+
+.etapa-formulario.ativa {
+  display: block;
+}
+
+.campo {
+  margin-bottom: 16px;
+}
+
+.linha-campos {
+  display: flex;
+  gap: 12px;
+}
+
+.linha-campos .campo {
+  flex: 1;
+}
+
+label {
+  display: block;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--azul-escuro);
+  margin-bottom: 5px;
+}
+
+input[type="text"],
+input[type="number"],
+input[type="date"],
+input[type="time"],
+select,
+textarea {
+  width: 100%;
+  font-family: var(--fonte-corpo);
+  font-size: 14px;
+  color: var(--azul-escuro);
+  background: var(--branco);
+  border: 1px solid var(--borda);
+  border-radius: var(--raio);
+  padding: 10px 12px;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  border-color: var(--azul-secundaria);
+  box-shadow: 0 0 0 2px rgba(0, 183, 215, 0.25);
+}
+
+input[readonly],
+input:disabled {
+  background: var(--cinza-neutro);
+  color: var(--texto-secundario);
+}
+
+textarea {
+  resize: vertical;
+  min-height: 72px;
+}
+
+.dica-campo {
+  font-size: 11px;
+  color: var(--texto-secundario);
+  margin-top: 4px;
+}
+
+.campo.invalido input,
+.campo.invalido select {
+  border-color: var(--vermelho-erro);
+  background: var(--fundo-erro);
+}
+
+.mensagem-erro-campo {
+  display: none;
+  font-size: 12px;
+  color: var(--vermelho-erro);
+  margin-top: 4px;
+}
+
+.campo.invalido .mensagem-erro-campo {
+  display: block;
+}
+
+.percentual-destaque {
+  font-family: var(--fonte-titulo);
+  font-weight: 700;
+  font-size: 18px;
+  color: var(--azul-principal);
+}
+
+/* ---------- Confirmacao e resultado ---------- */
+
+.resumo-confirmacao {
+  border-top: 1px solid var(--cinza-neutro);
+  border-bottom: 1px solid var(--cinza-neutro);
+  padding: 12px 0;
+  margin: 16px 0;
+}
+
+.linha-resumo {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 6px 0;
+  font-size: 13px;
+}
+
+.linha-resumo .rotulo {
+  color: var(--texto-secundario);
+}
+
+.linha-resumo .valor {
+  color: var(--azul-escuro);
+  font-weight: 700;
+  text-align: right;
+}
+
+.painel-resultado {
+  text-align: center;
+}
+
+.painel-resultado .icone-status {
+  font-size: 40px;
+  margin-bottom: 12px;
+}
+
+.painel-resultado.sucesso .icone-status { color: var(--verde-sucesso); }
+.painel-resultado.erro .icone-status { color: var(--vermelho-erro); }
+
+.painel-resultado h2 {
+  margin-bottom: 16px;
+}
+
+.cartao-status {
+  background: var(--cinza-neutro);
+  border-radius: var(--raio);
+  padding: 16px;
+  text-align: left;
+  margin: 16px 0;
+}
+
+.selo-status {
+  display: inline-block;
+  background: var(--azul-secundaria);
+  color: var(--branco);
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 20px;
+}
+
+.mensagem-erro-geral {
+  background: var(--fundo-erro);
+  color: var(--vermelho-erro);
+  border-radius: var(--raio);
+  padding: 14px 16px;
+  font-size: 14px;
+  margin-bottom: 16px;
+}
+
+.oculto {
+  display: none !important;
+}
+
+/* ---------- Rodape ---------- */
+
+.rodape-form {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+/* ---------- Responsividade ---------- */
+
+@media (max-width: 480px) {
+  .grade-resumo {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .linha-campos {
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .atalhos {
+    flex-direction: column;
+  }
+
+  .rodape-form {
+    flex-direction: column-reverse;
+  }
+
+  .linha-botoes {
+    flex-direction: column;
+  }
+}
