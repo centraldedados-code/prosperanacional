@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Consultar ações - Prospera Nacional</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/estilo.css">
+</head>
+<body>
+
+<header class="cabecalho">
+  <a href="index.html" class="marca-link"><div class="marca">PROSPERA NACIONAL</div></a>
+  <p class="subtitulo">Consultar ações</p>
+</header>
+
+<main class="container">
+
+  <section class="cartao">
+    <a href="index.html" class="link-voltar">&larr; Voltar ao início</a>
+
+    <div class="barra-filtros">
+      <div class="campo">
+        <label for="filtroNucleo">Núcleo</label>
+        <select id="filtroNucleo">
+          <option value="">Todos</option>
+        </select>
+      </div>
+      <div class="campo">
+        <label for="filtroOS">OS</label>
+        <select id="filtroOS">
+          <option value="">Todas</option>
+        </select>
+      </div>
+      <div class="campo">
+        <label for="filtroStatus">Status</label>
+        <select id="filtroStatus">
+          <option value="">Todos</option>
+          <option value="EM ABERTO">Em Aberto</option>
+          <option value="EM CONFERENCIA">Em Conferência</option>
+          <option value="PRECISA CORRIGIR">Precisa Corrigir</option>
+          <option value="PRONTA">Pronta</option>
+        </select>
+      </div>
+      <div class="campo">
+        <label for="filtroDataInicial">De</label>
+        <input type="date" id="filtroDataInicial">
+      </div>
+      <div class="campo">
+        <label for="filtroDataFinal">Até</label>
+        <input type="date" id="filtroDataFinal">
+      </div>
+    </div>
+
+    <div class="campo">
+      <label for="filtroNome">Buscar por nome da ação</label>
+      <input type="text" id="filtroNome" placeholder="Digite parte do nome da ação">
+    </div>
+
+    <div id="contadorResultados" class="contador-resultados"></div>
+
+    <div class="tabela-wrapper">
+      <table class="tabela-acoes">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Núcleo</th>
+            <th>OS</th>
+            <th>Nome da ação</th>
+            <th>Data</th>
+            <th>Responsável</th>
+            <th>Status</th>
+            <th>%</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="corpoTabelaAcoes"></tbody>
+      </table>
+    </div>
+
+    <div id="mensagemVazia" class="mensagem-vazia oculto">
+      Nenhuma ação encontrada com os filtros selecionados.
+    </div>
+
+    <div id="avisoErroConsulta" class="mensagem-erro-geral oculto"></div>
+  </section>
+
+</main>
+
+<script src="config.js"></script>
+<script src="js/api.js"></script>
+<script src="js/consultar.js"></script>
+</body>
+</html>

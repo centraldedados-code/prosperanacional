@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ficha da ação - Prospera Nacional</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/estilo.css">
+</head>
+<body>
+
+<header class="cabecalho">
+  <a href="index.html" class="marca-link"><div class="marca">PROSPERA NACIONAL</div></a>
+  <p class="subtitulo">Ficha da ação</p>
+</header>
+
+<main class="container">
+
+  <section class="cartao">
+    <a href="consultar.html" class="link-voltar">&larr; Voltar para Consultar Ações</a>
+
+    <div id="avisoErroFicha" class="mensagem-erro-geral oculto"></div>
+
+    <div id="conteudoFicha" class="oculto">
+
+      <div class="cabecalho-ficha">
+        <h2 id="tituloFicha">Ficha da ação</h2>
+        <span id="seloStatusAtual" class="selo-status">-</span>
+      </div>
+
+      <div class="bloco-ficha">
+        <div class="rotulo-secao">Identificação</div>
+        <div class="grade-dados">
+          <div class="item-dado"><div class="rotulo-item">ID da ação</div><div class="valor-item" id="valorId"></div></div>
+          <div class="item-dado"><div class="rotulo-item">Núcleo</div><div class="valor-item" id="valorNucleo"></div></div>
+          <div class="item-dado"><div class="rotulo-item">Estado</div><div class="valor-item" id="valorEstado"></div></div>
+          <div class="item-dado"><div class="rotulo-item">Cidade</div><div class="valor-item" id="valorCidade"></div></div>
+          <div class="item-dado"><div class="rotulo-item">OS</div><div class="valor-item" id="valorOS"></div></div>
+          <div class="item-dado"><div class="rotulo-item">Tipo de ação</div><div class="valor-item" id="valorTipoAcao"></div></div>
+          <div class="item-dado"><div class="rotulo-item">Nome da ação</div><div class="valor-item" id="valorNomeAcao"></div></div>
+          <div class="item-dado"><div class="rotulo-item">Responsável</div><div class="valor-item" id="valorResponsavel"></div></div>
+        </div>
+      </div>
+
+      <div class="bloco-ficha">
+        <div class="rotulo-secao">Execução</div>
+        <div class="grade-dados">
+          <div class="item-dado"><div class="rotulo-item">Data</div><div class="valor-item" id="valorData"></div></div>
+          <div class="item-dado"><div class="rotulo-item">Horário</div><div class="valor-item" id="valorHorario"></div></div>
+          <div class="item-dado"><div class="rotulo-item">Local</div><div class="valor-item" id="valorLocal"></div></div>
+          <div class="item-dado"><div class="rotulo-item">Carga horária prevista</div><div class="valor-item" id="valorChPrevista"></div></div>
+          <div class="item-dado"><div class="rotulo-item">Carga horária realizada</div><div class="valor-item" id="valorChRealizada"></div></div>
+        </div>
+      </div>
+
+      <div class="bloco-ficha">
+        <div class="rotulo-secao">Resultados</div>
+        <div class="grade-dados">
+          <div class="item-dado"><div class="rotulo-item">Meta prevista</div><div class="valor-item" id="valorMetaPrevista"></div></div>
+          <div class="item-dado"><div class="rotulo-item">Inscritos</div><div class="valor-item" id="valorInscritos"></div></div>
+          <div class="item-dado"><div class="rotulo-item">Participantes atendidos</div><div class="valor-item" id="valorParticipantesAtendidos"></div></div>
+          <div class="item-dado"><div class="rotulo-item">Percentual alcançado</div><div class="valor-item" id="valorPercentual"></div></div>
+          <div class="item-dado"><div class="rotulo-item">Resultado</div><div class="valor-item" id="valorResultado"></div></div>
+          <div class="item-dado"><div class="rotulo-item">Justificativa</div><div class="valor-item" id="valorJustificativa"></div></div>
+        </div>
+      </div>
+
+      <button type="button" class="botao botao-primario botao-largura-total" id="botaoAbrirPastaFicha" style="margin-bottom:24px;">Abrir pasta no Drive</button>
+
+      <div class="bloco-ficha">
+        <div class="rotulo-secao">Documentação</div>
+        <div id="resumoChecklistFicha" class="resumo-checklist"></div>
+        <div class="tabela-wrapper">
+          <table class="tabela-checklist">
+            <thead>
+              <tr>
+                <th>Documento</th>
+                <th>Obrigatório</th>
+                <th>Status</th>
+                <th>Link</th>
+                <th>Data de envio</th>
+                <th>Observação</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="corpoTabelaChecklist"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="bloco-ficha">
+        <div class="rotulo-secao">Alterar status da ação</div>
+        <div class="area-status-ficha">
+          <div class="campo" style="margin-bottom:0;">
+            <label for="selecaoNovoStatus">Novo status</label>
+            <select id="selecaoNovoStatus">
+              <option value="EM ABERTO">Em Aberto</option>
+              <option value="EM CONFERENCIA">Em Conferência</option>
+              <option value="PRECISA CORRIGIR">Precisa Corrigir</option>
+              <option value="PRONTA">Pronta</option>
+            </select>
+          </div>
+          <div class="campo" style="margin-bottom:0;flex:1;">
+            <label for="responsavelAlteracaoStatus">Responsável pela alteração</label>
+            <input type="text" id="responsavelAlteracaoStatus" placeholder="Seu nome">
+          </div>
+          <button type="button" class="botao botao-destaque" id="botaoConfirmarStatus" style="align-self:flex-end;">Confirmar alteração</button>
+        </div>
+        <div id="mensagemStatus" class="mensagem-linha-salva" style="margin-top:10px;"></div>
+      </div>
+
+    </div>
+
+  </section>
+
+</main>
+
+<script src="config.js"></script>
+<script src="js/api.js"></script>
+<script src="js/ficha.js"></script>
+</body>
+</html>
