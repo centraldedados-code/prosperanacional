@@ -106,11 +106,13 @@ function preencherFicha(acao) {
 
   definirTexto('valorData', formatarDataExibicaoApi(acao.Data));
 
+  var horaInicial = formatarHoraExibicaoApi(acao.Hora_Inicial);
+  var horaFinal = formatarHoraExibicaoApi(acao.Hora_Final);
   var horario = '-';
-  if (acao.Hora_Inicial && acao.Hora_Final) {
-    horario = acao.Hora_Inicial + ' às ' + acao.Hora_Final;
-  } else if (acao.Hora_Inicial || acao.Hora_Final) {
-    horario = acao.Hora_Inicial || acao.Hora_Final;
+  if (horaInicial && horaFinal) {
+    horario = horaInicial + ' às ' + horaFinal;
+  } else if (horaInicial || horaFinal) {
+    horario = horaInicial || horaFinal;
   }
   definirTexto('valorHorario', horario);
 
@@ -137,6 +139,40 @@ function preencherFicha(acao) {
 
 function definirTexto(idElemento, valor) {
   document.getElementById(idElemento).textContent = (valor === undefined || valor === null || valor === '') ? '-' : valor;
+}
+
+/**
+ * Formata um horario vindo da API para exibicao: HH:MM.
+ *
+ * O campo Hora_Inicial/Hora_Final chega do formulario de cadastro como
+ * texto simples ("09:00"), mas o Google Sheets reconhece esse padrao e
+ * converte a celula para um valor de hora de verdade. Isso faz a API
+ * devolver um texto de data/hora completo, com uma data-base fixa
+ * (1899-12-30, forma como o Sheets representa "so a hora"). Esta funcao
+ * aceita os dois formatos:
+ * - "09:00" (texto simples, caso venha assim de algum lugar)
+ * - "1899-12-30T12:00:00.000Z" (valor de hora convertido pelo Sheets)
+ * e sempre devolve "HH:MM" no horario local de quem esta usando o
+ * sistema, revertendo a conversao de fuso horario da mesma forma como
+ * ela foi aplicada na gravacao.
+ */
+function formatarHoraExibicaoApi(valor) {
+  if (!valor) return '';
+
+  var texto = String(valor);
+
+  if (/^\d{2}:\d{2}$/.test(texto)) {
+    return texto;
+  }
+
+  var dataHora = new Date(texto);
+  if (isNaN(dataHora.getTime())) {
+    return texto;
+  }
+
+  var horas = String(dataHora.getHours()).padStart(2, '0');
+  var minutos = String(dataHora.getMinutes()).padStart(2, '0');
+  return horas + ':' + minutos;
 }
 
 function configurarBotaoAbrirPasta() {
