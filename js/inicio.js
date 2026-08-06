@@ -1,27 +1,15 @@
 /**
  * PROSPERA NACIONAL - TELA INICIO
  *
- * Responsabilidades desta tela:
- * 1. Buscar todas as acoes cadastradas (consultarAcoes) e calcular,
- *    no proprio frontend, as cinco contagens do resumo.
- * 2. Tratar o clique em "Consultar acoes" mostrando apenas o aviso
- *    "Disponivel em breve." - sem navegar para lugar nenhum, porque
- *    essa tela ainda nao existe.
+ * Responsabilidade desta tela: buscar todas as acoes cadastradas
+ * (consultarAcoes) e calcular, no proprio frontend, as cinco contagens
+ * do resumo. O botao "Consultar acoes" agora navega direto para
+ * consultar.html (Etapa 3) - nao precisa mais de tratamento por JS.
  */
 
 document.addEventListener('DOMContentLoaded', function () {
   carregarResumo();
-  configurarBotaoConsultarAcoes();
 });
-
-function configurarBotaoConsultarAcoes() {
-  var botao = document.getElementById('botaoConsultarAcoes');
-  var aviso = document.getElementById('avisoConsultar');
-
-  botao.addEventListener('click', function () {
-    aviso.classList.add('visivel');
-  });
-}
 
 async function carregarResumo() {
   var avisoResumo = document.getElementById('avisoResumo');
