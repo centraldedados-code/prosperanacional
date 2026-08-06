@@ -487,3 +487,280 @@ textarea {
     flex-direction: column;
   }
 }
+
+/* =========================================================
+   ETAPA 3 - CONSULTAR ACOES E FICHA DA ACAO
+   ========================================================= */
+
+.link-voltar {
+  display: inline-block;
+  font-size: 13px;
+  color: var(--azul-secundaria);
+  text-decoration: none;
+  margin-bottom: 12px;
+  font-weight: 700;
+}
+
+.link-voltar:hover {
+  text-decoration: underline;
+}
+
+/* ---------- Barra de filtros ---------- */
+
+.barra-filtros {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.barra-filtros .campo {
+  margin-bottom: 0;
+}
+
+.barra-filtros label {
+  font-size: 11px;
+}
+
+@media (max-width: 900px) {
+  .barra-filtros {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .barra-filtros {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ---------- Tabela de acoes ---------- */
+
+.tabela-wrapper {
+  overflow-x: auto;
+}
+
+.tabela-acoes {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  min-width: 720px;
+}
+
+.tabela-acoes th {
+  text-align: left;
+  padding: 8px 10px;
+  color: var(--texto-secundario);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  border-bottom: 2px solid var(--cinza-neutro);
+}
+
+.tabela-acoes td {
+  padding: 10px;
+  border-bottom: 1px solid var(--cinza-neutro);
+  color: var(--azul-escuro);
+  vertical-align: middle;
+}
+
+.tabela-acoes tr:hover td {
+  background: var(--cinza-neutro);
+}
+
+.link-ficha {
+  color: var(--azul-principal);
+  font-weight: 700;
+  text-decoration: none;
+  font-size: 12px;
+}
+
+.link-ficha:hover {
+  text-decoration: underline;
+}
+
+.mensagem-vazia {
+  text-align: center;
+  color: var(--texto-secundario);
+  font-size: 13px;
+  padding: 32px 16px;
+}
+
+.contador-resultados {
+  font-size: 12px;
+  color: var(--texto-secundario);
+  margin-bottom: 12px;
+}
+
+/* ---------- Selos de status (reutiliza .selo-status como base) ---------- */
+
+.selo-status.selo-conferencia {
+  background: var(--amarelo-acento);
+  color: #412402;
+}
+
+.selo-status.selo-corrigir {
+  background: #D85A30;
+  color: var(--branco);
+}
+
+.selo-status.selo-pronta {
+  background: var(--verde-sucesso);
+  color: var(--branco);
+}
+
+/* ---------- Ficha da acao ---------- */
+
+.cabecalho-ficha {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.cabecalho-ficha h2 {
+  font-size: 16px;
+}
+
+.bloco-ficha {
+  margin-bottom: 24px;
+}
+
+.bloco-ficha .rotulo-secao {
+  margin-bottom: 12px;
+}
+
+.grade-dados {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px 20px;
+}
+
+@media (max-width: 480px) {
+  .grade-dados {
+    grid-template-columns: 1fr;
+  }
+}
+
+.item-dado .rotulo-item {
+  font-size: 11px;
+  color: var(--texto-secundario);
+  margin-bottom: 2px;
+}
+
+.item-dado .valor-item {
+  font-size: 14px;
+  color: var(--azul-escuro);
+  font-weight: 600;
+}
+
+.resumo-checklist {
+  background: var(--cinza-neutro);
+  border-radius: var(--raio);
+  padding: 10px 14px;
+  font-size: 13px;
+  color: var(--azul-escuro);
+  margin-bottom: 16px;
+}
+
+.resumo-checklist.completo {
+  background: var(--fundo-sucesso);
+  color: var(--verde-sucesso);
+  font-weight: 700;
+}
+
+/* ---------- Tabela editavel do checklist ---------- */
+
+.tabela-checklist {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+  min-width: 760px;
+}
+
+.tabela-checklist th {
+  text-align: left;
+  padding: 8px 8px;
+  color: var(--texto-secundario);
+  font-size: 10px;
+  text-transform: uppercase;
+  border-bottom: 2px solid var(--cinza-neutro);
+}
+
+.tabela-checklist td {
+  padding: 8px;
+  border-bottom: 1px solid var(--cinza-neutro);
+  vertical-align: middle;
+}
+
+.tabela-checklist select,
+.tabela-checklist input[type="text"] {
+  padding: 6px 8px;
+  font-size: 12px;
+  min-width: 110px;
+}
+
+.nome-documento {
+  font-weight: 700;
+  color: var(--azul-escuro);
+  min-width: 160px;
+}
+
+.selo-obrigatorio {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 10px;
+}
+
+.selo-obrigatorio.sim {
+  background: var(--fundo-erro);
+  color: var(--vermelho-erro);
+}
+
+.selo-obrigatorio.nao {
+  background: var(--cinza-neutro);
+  color: var(--texto-secundario);
+}
+
+.selo-obrigatorio.avalidar {
+  background: #FAEEDA;
+  color: #633806;
+}
+
+.botao-salvar-linha {
+  font-size: 11px;
+  padding: 6px 12px;
+}
+
+.mensagem-linha-salva {
+  font-size: 10px;
+  color: var(--verde-sucesso);
+  font-weight: 700;
+  display: none;
+  margin-top: 4px;
+}
+
+.mensagem-linha-salva.visivel {
+  display: block;
+}
+
+.area-status-ficha {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.seletor-status-inline {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.seletor-status-inline select {
+  width: auto;
+}
