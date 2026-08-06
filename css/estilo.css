@@ -798,3 +798,183 @@ textarea {
 .seletor-status-inline select {
   width: auto;
 }
+
+/* =========================================================
+   ETAPA 4 - PAINEL DA COORDENACAO
+   ========================================================= */
+
+/* A tela Inicio passou a ter 3 atalhos em vez de 2; em telas medias
+   3 botoes lado a lado ficam apertados, entao empilha um pouco antes
+   do breakpoint geral de 480px ja usado no resto do sistema. */
+@media (max-width: 620px) {
+  .atalhos {
+    flex-direction: column;
+  }
+}
+
+.rodape-secao {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.texto-atualizacao {
+  font-size: 12px;
+  color: var(--texto-secundario);
+}
+
+/* ---------- Filtros do painel (botoes explicitos, sem auto-aplicar) ---------- */
+
+.linha-acoes-filtro {
+  display: flex;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+/* ---------- Resumo por nucleo / por OS (tabelas simples de 2 colunas) ---------- */
+
+.tabela-resumo {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.tabela-resumo th {
+  text-align: left;
+  padding: 8px 10px;
+  color: var(--texto-secundario);
+  font-size: 11px;
+  text-transform: uppercase;
+  border-bottom: 2px solid var(--cinza-neutro);
+}
+
+.tabela-resumo td {
+  padding: 9px 10px;
+  border-bottom: 1px solid var(--cinza-neutro);
+  color: var(--azul-escuro);
+}
+
+.tabela-resumo td.numero-resumo {
+  text-align: right;
+  font-weight: 700;
+}
+
+.duas-colunas-resumo {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+@media (max-width: 700px) {
+  .duas-colunas-resumo {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ---------- Area de atencao da coordenacao ---------- */
+
+.subtitulo-atencao {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--texto-secundario);
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  margin: 20px 0 8px;
+}
+
+.subtitulo-atencao:first-child {
+  margin-top: 0;
+}
+
+.lista-atencao {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.item-atencao {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--cinza-neutro);
+  font-size: 13px;
+}
+
+.item-atencao:last-child {
+  border-bottom: none;
+}
+
+.item-atencao .nucleo-item-atencao {
+  color: var(--texto-secundario);
+  font-size: 12px;
+}
+
+.item-atencao a {
+  color: var(--azul-principal);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.item-atencao a:hover {
+  text-decoration: underline;
+}
+
+/* ---------- Selo de situacao da documentacao (classificacao visual, nao e status novo) ---------- */
+
+.selo-doc {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 3px 9px;
+  border-radius: 20px;
+  white-space: nowrap;
+}
+
+.selo-doc.doc-ok {
+  background: var(--fundo-sucesso);
+  color: var(--verde-sucesso);
+}
+
+.selo-doc.doc-pendente {
+  background: var(--fundo-erro);
+  color: var(--vermelho-erro);
+}
+
+.selo-doc.doc-avalidar {
+  background: #FAEEDA;
+  color: #633806;
+}
+
+.selo-doc.doc-pendente-avalidar {
+  background: var(--fundo-erro);
+  color: var(--vermelho-erro);
+  border: 1px solid #633806;
+}
+
+.link-drive-painel {
+  color: var(--azul-secundaria);
+  font-weight: 700;
+  text-decoration: none;
+  font-size: 12px;
+  margin-left: 10px;
+}
+
+.link-drive-painel:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 480px) {
+  .rodape-secao {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .linha-acoes-filtro {
+    flex-direction: column;
+  }
+}
