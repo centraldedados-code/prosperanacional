@@ -41,6 +41,45 @@ async function apiGet(acao, parametros) {
 }
 
 /**
+ * Executa uma chamada GET para a API que GRAVA dados (usada apenas por
+ * atualizarChecklist e alterarStatus). E identica a apiGet, com uma
+ * unica diferenca proposital: NAO descarta parametros com valor de
+ * texto vazio (''), porque nesses dois casos um texto vazio pode ser
+ * uma informacao valida (por exemplo, apagar o conteudo do campo
+ * Observacao). apiGet continua descartando valores vazios, sem
+ * alteracao, para nao mudar o comportamento das consultas que ja
+ * funcionam.
+ *
+ * Motivo de usar GET aqui em vez de POST: chamadas POST feitas com
+ * fetch() para este Web App estavam sendo redirecionadas de um jeito
+ * que descartava o metodo e o corpo da requisicao, fazendo o pedido
+ * cair sem nenhum dado no doGet do backend. Usar GET evita esse
+ * problema, aproveitando o mesmo caminho que ja e confiavel para as
+ * consultas.
+ */
+async function apiGetEscrita(acao, parametros) {
+  var url = API_URL + '?acao=' + encodeURIComponent(acao);
+
+  if (parametros) {
+    Object.keys(parametros).forEach(function (chave) {
+      var valor = parametros[chave];
+      if (valor !== undefined && valor !== null) {
+        url += '&' + encodeURIComponent(chave) + '=' + encodeURIComponent(valor);
+      }
+    });
+  }
+
+  try {
+    var resposta = await fetch(url, { method: 'GET' });
+    var texto = await resposta.text();
+    return JSON.parse(texto);
+  } catch (erro) {
+    console.error('Falha na chamada de escrita (' + acao + '):', erro);
+    return { sucesso: false, erro: 'ERRO_DE_REDE' };
+  }
+}
+
+/**
  * Executa uma chamada POST para a API. O Content-Type e sempre
  * text/plain;charset=utf-8 de proposito: evita que o navegador dispare
  * um preflight OPTIONS (que o Web App do Apps Script nao responde),
@@ -111,9 +150,12 @@ async function consultarChecklist(idAcao) {
  * Altera o status de uma acao (EM ABERTO, EM CONFERENCIA, PRECISA
  * CORRIGIR ou PRONTA). responsavelAlteracao e sempre digitado na hora,
  * ja que o sistema ainda nao tem login. observacao e opcional.
+ *
+ * Usa apiGetEscrita (nao apiPost) para contornar o problema de
+ * confiabilidade do POST explicado em apiGetEscrita.
  */
 async function alterarStatus(idAcao, novoStatus, responsavelAlteracao, observacao) {
-  return apiPost('alterarStatus', {
+  return apiGetEscrita('alterarStatus', {
     idAcao: idAcao,
     novoStatus: novoStatus,
     responsavelAlteracao: responsavelAlteracao,
@@ -125,9 +167,12 @@ async function alterarStatus(idAcao, novoStatus, responsavelAlteracao, observaca
  * Atualiza um documento do checklist de uma acao: status, link e/ou
  * observacao. link e observacao sao opcionais - so sao gravados quando
  * informados, sem apagar o que ja estava salvo quando omitidos.
+ *
+ * Usa apiGetEscrita (nao apiPost) para contornar o problema de
+ * confiabilidade do POST explicado em apiGetEscrita.
  */
 async function atualizarChecklist(idAcao, nomeDocumento, status, link, observacao) {
-  return apiPost('atualizarChecklist', {
+  return apiGetEscrita('atualizarChecklist', {
     idAcao: idAcao,
     nomeDocumento: nomeDocumento,
     status: status,
