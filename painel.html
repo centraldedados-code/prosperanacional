@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Painel da Coordenação - Prospera Nacional</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/estilo.css">
+</head>
+<body>
+
+<header class="cabecalho">
+  <a href="index.html" class="marca-link"><div class="marca">PROSPERA NACIONAL</div></a>
+  <p class="subtitulo">Painel da Coordenação</p>
+</header>
+
+<main class="container">
+
+  <section class="cartao">
+    <a href="index.html" class="link-voltar">&larr; Voltar ao início</a>
+    <p class="texto-explicativo">Visão consolidada das ações, execução e documentação dos núcleos.</p>
+    <div class="rodape-secao">
+      <span id="textoAtualizacaoPainel" class="texto-atualizacao"></span>
+      <button type="button" class="botao botao-primario" id="botaoAtualizarDados">Atualizar dados</button>
+    </div>
+    <div id="avisoErroPainel" class="mensagem-erro-geral oculto"></div>
+    <div id="avisoCarregandoPainel" class="aviso visivel">Carregando dados...</div>
+  </section>
+
+  <div id="conteudoPainel" class="oculto">
+
+    <!-- INDICADORES PRINCIPAIS -->
+    <section class="cartao">
+      <div class="rotulo-secao">Indicadores principais</div>
+      <div class="grade-resumo">
+        <div class="metrica metrica-total">
+          <div class="numero" id="painelNumeroTotal">-</div>
+          <div class="rotulo">Total de ações</div>
+        </div>
+        <div class="metrica metrica-aberto">
+          <div class="numero" id="painelNumeroAberto">-</div>
+          <div class="rotulo">Em Aberto</div>
+        </div>
+        <div class="metrica metrica-conferencia">
+          <div class="numero" id="painelNumeroConferencia">-</div>
+          <div class="rotulo">Em Conferência</div>
+        </div>
+        <div class="metrica metrica-corrigir">
+          <div class="numero" id="painelNumeroCorrigir">-</div>
+          <div class="rotulo">Precisa Corrigir</div>
+        </div>
+        <div class="metrica metrica-pronta">
+          <div class="numero" id="painelNumeroPronta">-</div>
+          <div class="rotulo">Prontas</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FILTROS -->
+    <section class="cartao">
+      <div class="rotulo-secao">Filtros</div>
+      <div class="barra-filtros">
+        <div class="campo">
+          <label for="filtroNucleoPainel">Núcleo</label>
+          <select id="filtroNucleoPainel">
+            <option value="">Todos</option>
+          </select>
+        </div>
+        <div class="campo">
+          <label for="filtroOSPainel">OS</label>
+          <select id="filtroOSPainel">
+            <option value="">Todas</option>
+          </select>
+        </div>
+        <div class="campo">
+          <label for="filtroStatusPainel">Status</label>
+          <select id="filtroStatusPainel">
+            <option value="">Todos</option>
+            <option value="EM ABERTO">Em Aberto</option>
+            <option value="EM CONFERENCIA">Em Conferência</option>
+            <option value="PRECISA CORRIGIR">Precisa Corrigir</option>
+            <option value="PRONTA">Pronta</option>
+          </select>
+        </div>
+        <div class="campo">
+          <label for="filtroDataInicialPainel">Data inicial</label>
+          <input type="date" id="filtroDataInicialPainel">
+        </div>
+        <div class="campo">
+          <label for="filtroDataFinalPainel">Data final</label>
+          <input type="date" id="filtroDataFinalPainel">
+        </div>
+      </div>
+      <div class="campo">
+        <label for="filtroNomePainel">Nome da ação</label>
+        <input type="text" id="filtroNomePainel" placeholder="Digite parte do nome da ação">
+      </div>
+      <div class="linha-acoes-filtro">
+        <button type="button" class="botao botao-destaque" id="botaoFiltrarPainel">Filtrar</button>
+        <button type="button" class="botao botao-secundario" id="botaoLimparFiltrosPainel">Limpar filtros</button>
+      </div>
+    </section>
+
+    <!-- RESUMO POR NUCLEO E POR OS -->
+    <section class="cartao">
+      <div class="duas-colunas-resumo">
+        <div>
+          <div class="rotulo-secao">Ações por núcleo</div>
+          <div class="tabela-wrapper">
+            <table class="tabela-resumo">
+              <thead><tr><th>Núcleo</th><th>Ações</th></tr></thead>
+              <tbody id="corpoResumoNucleo"></tbody>
+            </table>
+          </div>
+        </div>
+        <div>
+          <div class="rotulo-secao">Ações por ordem de serviço</div>
+          <div class="tabela-wrapper">
+            <table class="tabela-resumo">
+              <thead><tr><th>OS</th><th>Ações</th></tr></thead>
+              <tbody id="corpoResumoOS"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- AREA DE ATENCAO -->
+    <section class="cartao">
+      <div class="rotulo-secao">Atenção da coordenação</div>
+
+      <div class="subtitulo-atencao">Precisa corrigir</div>
+      <ul class="lista-atencao" id="listaAtencaoCorrigir"></ul>
+
+      <div class="subtitulo-atencao">Documentação pendente</div>
+      <ul class="lista-atencao" id="listaAtencaoPendente"></ul>
+
+      <div class="subtitulo-atencao">Documentação a validar</div>
+      <p class="texto-explicativo" style="font-size:12px;margin-bottom:8px;">"A validar" não significa documento faltante - significa que a lista de documentos obrigatórios dessa OS ainda precisa ser definida pela coordenação.</p>
+      <ul class="lista-atencao" id="listaAtencaoValidar"></ul>
+    </section>
+
+    <!-- TABELA PRINCIPAL -->
+    <section class="cartao">
+      <div class="rotulo-secao">Ações</div>
+      <div id="contadorResultadosPainel" class="contador-resultados"></div>
+      <div class="tabela-wrapper">
+        <table class="tabela-acoes">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Núcleo</th>
+              <th>OS</th>
+              <th>Nome da ação</th>
+              <th>Data</th>
+              <th>Responsável</th>
+              <th>Status</th>
+              <th>%</th>
+              <th>Documentação</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="corpoTabelaPainel"></tbody>
+        </table>
+      </div>
+      <div id="mensagemVaziaPainel" class="mensagem-vazia oculto">Nenhuma ação encontrada com os filtros selecionados.</div>
+    </section>
+
+  </div>
+
+</main>
+
+<script src="config.js"></script>
+<script src="js/api.js"></script>
+<script src="js/painel.js"></script>
+</body>
+</html>
