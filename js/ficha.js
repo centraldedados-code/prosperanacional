@@ -253,8 +253,10 @@ function montarLinhaChecklist(item, indice) {
     '<td>' + (item.Data_Envio ? formatarDataExibicaoApi(item.Data_Envio) : '-') + '</td>' +
     '<td><input type="text" id="' + idObservacao + '" value="' + escaparHtmlFicha(item.Observacao || '') + '" placeholder="Observação"></td>' +
     '<td>' +
-      '<button type="button" class="botao botao-secundario botao-salvar-linha" data-documento="' + escaparHtmlFicha(item.Documento) + '">Salvar</button>' +
-      '<div class="mensagem-linha-salva" id="' + idMensagem + '"></div>' +
+      '<div class="acoes-linha-checklist">' +
+        '<button type="button" class="botao botao-secundario botao-salvar-linha" data-documento="' + escaparHtmlFicha(item.Documento) + '">Salvar</button>' +
+        '<div class="mensagem-linha-salva" id="' + idMensagem + '"></div>' +
+      '</div>' +
     '</td>';
 
   var botaoSalvar = linha.querySelector('.botao-salvar-linha');
