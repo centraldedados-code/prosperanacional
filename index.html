@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prospera Nacional | Monitoramento</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Open+Sans:wght@400;600;700&display=swap');
+:root{
+  --az:#092040;--azs:#00B7D7;--am:#ECC203;
+  --cz:#EFF1F3;--es:#021738;--br:#FFFFFF;
+  --gv:#1A6B3C;--gvb:#ebf7eb;
+  --aw:#7A4F00;--awb:#fff8e0;
+  --rd:#8B1A1A;--rdb:#fce8e8;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Open Sans',Arial,sans-serif;background:var(--cz);color:var(--es);min-height:100vh}
+h1,h2,h3,h4{font-family:'Montserrat',Arial,sans-serif}
+
+/* SENHA */
+#pwd{position:fixed;inset:0;z-index:9999;background:var(--az);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px}
+#pwd.off{display:none}
+.pbox{background:var(--br);border-radius:16px;padding:36px 40px;max-width:420px;width:100%;text-align:center}
+.plogo-main{height:54px;object-fit:contain;display:block;margin:0 auto 22px}
+.pfoot-logo{height:56px;object-fit:contain;display:block;margin:28px auto 0}
+.psub{color:var(--am);font-size:11px;font-weight:700;letter-spacing:2px;margin-bottom:6px;text-transform:uppercase;font-family:'Montserrat',sans-serif}
+.phint{font-size:12px;color:#999;margin-bottom:20px}
+.pin{width:100%;padding:12px 16px;border:2px solid #dde4ee;border-radius:10px;font-size:15px;letter-spacing:2px;font-family:'Open Sans',sans-serif;color:var(--az);outline:none;transition:border-color .2s;margin-bottom:12px}
+.pin:focus{border-color:var(--azs)}
+.pbtn{width:100%;padding:13px;background:var(--az);color:var(--am);border:none;border-radius:10px;font-size:14px;font-weight:700;letter-spacing:1px;cursor:pointer;font-family:'Montserrat',sans-serif;transition:background .2s}
+.pbtn:hover{background:var(--azs);color:var(--br)}
+.perr{color:#cc0000;font-size:12px;margin-top:8px;min-height:18px}
+
+/* LOADING */
+#ld{display:none;position:fixed;inset:0;z-index:500;background:var(--cz);align-items:center;justify-content:center;flex-direction:column;gap:16px}
+#ld.on{display:flex}
+.spin{width:48px;height:48px;border:4px solid var(--azs);border-top-color:var(--am);border-radius:50%;animation:giro .8s linear infinite}
+@keyframes giro{to{transform:rotate(360deg)}}
+.ltxt{font-family:'Montserrat',sans-serif;font-weight:700;color:var(--az);font-size:14px}
+
+/* APP */
+#app{display:none}
+#app.on{display:block}
+
+/* HEADER */
+.hdr{background:var(--az);position:sticky;top:0;z-index:100;box-shadow:0 2px 10px rgba(0,0,0,.3)}
+.hdri{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:64px;padding:0 24px;gap:16px}
+.hlogo{height:30px;object-fit:contain;background:var(--br);border-radius:6px;padding:3px 8px}
+.hdiv{width:1px;height:32px;background:rgba(255,255,255,.2)}
+.htit{color:var(--am);font-size:15px;font-weight:700;letter-spacing:.5px;font-family:'Montserrat',sans-serif}
+.hsub{color:rgba(255,255,255,.5);font-size:11px;margin-top:2px}
+.hnav{display:flex;gap:4px}
+.nbtn{background:none;border:none;cursor:pointer;color:rgba(255,255,255,.6);font-size:11px;font-weight:700;letter-spacing:.5px;padding:8px 12px;border-radius:8px;text-transform:uppercase;transition:all .2s;font-family:'Montserrat',sans-serif}
+.nbtn:hover{color:var(--br);background:rgba(255,255,255,.1)}
+.nbtn.on{color:var(--am);background:rgba(236,194,3,.15)}
+
+/* WRAP */
+.wrap{max-width:1200px;margin:0 auto;padding:24px 16px}
+
+/* VIEWS */
+.vw{display:none}
+.vw.on{display:block}
+
+/* SECTION TITLE */
+.st{font-size:11px;font-weight:700;color:var(--az);text-transform:uppercase;letter-spacing:1.5px;margin:22px 0 12px;padding-left:10px;border-left:4px solid var(--azs);font-family:'Montserrat',sans-serif}
+
+/* KPI */
+.kpi{background:var(--az);border-radius:12px;padding:18px;text-align:center}
+.knum{color:var(--am);font-size:26px;font-weight:700;font-family:'Montserrat',sans-serif}
+.klab{color:rgba(255,255,255,.65);font-size:11px;margin-top:4px}
+
+/* SCORE BAR */
+.sbw{background:#dde4ee;border-radius:999px;overflow:hidden}
+.sb{border-radius:999px;transition:width 1.2s ease;height:100%}
+.shi{background:var(--gv)}.smid{background:var(--azs)}.slow{background:#c9940a}.scrit{background:#cc2222}
+
+/* BADGES */
+.badge{display:inline-block;font-size:10px;font-weight:700;padding:3px 10px;border-radius:20px;text-transform:uppercase;letter-spacing:.5px;font-family:'Montserrat',sans-serif}
+.bR{background:var(--gvb);color:var(--gv)}
+.bP{background:var(--awb);color:var(--aw)}
+.bC{background:var(--rdb);color:var(--rd)}
+.bA{background:#e8f0f8;color:var(--az)}
+.bT{background:#e0f7fb;color:#006080}
+.bE{background:#fff8e0;color:#7A4F00}
+
+/* CARD */
+.card{background:var(--br);border:1.5px solid #dde4ee;border-radius:12px;padding:16px 18px}
+
+/* TERRITORY CARD */
+.tcard{background:var(--br);border:1.5px solid #dde4ee;border-radius:14px;padding:20px;cursor:pointer;transition:border-color .18s,transform .18s,box-shadow .18s}
+.tcard:hover{border-color:var(--azs);transform:translateY(-3px);box-shadow:0 6px 20px rgba(0,183,215,.15)}
+.tnome{font-size:13px;font-weight:700;color:var(--az);margin-bottom:10px;font-family:'Montserrat',sans-serif}
+.tsc{font-size:30px;font-weight:700;color:var(--azs);font-family:'Montserrat',sans-serif}
+.tmeta{font-size:11px;color:#666;margin-top:2px}
+.tlink{color:var(--azs);font-size:11px;font-weight:700;margin-top:12px;display:block;font-family:'Montserrat',sans-serif}
+
+/* OS CARD (dentro do detalhe do territorio) */
+.oscard{background:var(--br);border:1.5px solid #dde4ee;border-radius:10px;padding:14px;transition:border-color .18s,box-shadow .18s}
+.oscard:hover{border-color:var(--azs);box-shadow:0 4px 12px rgba(0,183,215,.12)}
+.oscard.stR{border-left:4px solid var(--gv)}
+.oscard.stP{border-left:4px solid #c9940a}
+.osnome{font-size:12px;font-weight:700;color:var(--az);font-family:'Montserrat',sans-serif}
+.osfase{font-size:10px;color:#999;margin:3px 0 8px}
+.oslink{font-size:11px;color:var(--azs);font-weight:700;margin-top:8px;display:block;text-decoration:none}
+
+/* TABLE */
+.tbl{width:100%;border-collapse:collapse;font-size:12px}
+.tbl th{background:var(--az);color:var(--br);padding:10px 12px;text-align:left;font-size:10px;text-transform:uppercase;letter-spacing:.5px;font-weight:700;font-family:'Montserrat',sans-serif}
+.tbl td{padding:10px 12px;border-bottom:1px solid #eee;vertical-align:middle}
+.tbl tr:hover td{background:#f8fafc}
+.tbl a{color:var(--azs);text-decoration:none;font-weight:700}
+.tbl a:hover{text-decoration:underline}
+
+/* ALERT BOX */
+.abox{background:#e0f7fb;border:1px solid #b8ecf5;border-radius:10px;padding:14px 18px;margin-bottom:12px}
+.atit{font-weight:700;color:#006080;font-size:13px;margin-bottom:4px;font-family:'Montserrat',sans-serif}
+
+/* GRIDS */
+.g4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.g2{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+
+/* BACK */
+.back{background:none;border:2px solid var(--az);color:var(--az);font-size:11px;font-weight:700;letter-spacing:.5px;padding:8px 16px;border-radius:8px;cursor:pointer;text-transform:uppercase;transition:all .2s;margin-bottom:20px;font-family:'Montserrat',sans-serif}
+.back:hover{background:var(--az);color:var(--br)}
+
+/* FILTERS */
+.fbar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+.fbtn{background:var(--br);border:1.5px solid #dde4ee;color:var(--az);font-size:10px;font-weight:700;padding:6px 14px;border-radius:20px;cursor:pointer;transition:all .18s;text-transform:uppercase;letter-spacing:.5px;font-family:'Montserrat',sans-serif}
+.fbtn.on,.fbtn:hover{background:var(--az);color:var(--am);border-color:var(--az)}
+
+/* PASTA CARD */
+.pcard{background:var(--br);border:1.5px solid #dde4ee;border-radius:12px;padding:16px 18px;transition:border-color .18s,transform .18s,box-shadow .18s;display:flex;flex-direction:column;gap:8px}
+.pcard:hover{border-color:var(--azs);transform:translateY(-2px);box-shadow:0 6px 18px rgba(0,183,215,.14)}
+.pcard.stR{border-left:4px solid var(--gv)}
+.pcard.stP{border-left:4px solid #c9940a}
+.pcard-os{font-size:12px;font-weight:700;color:var(--az);font-family:'Montserrat',sans-serif}
+.pcard-ativ{font-size:10px;color:#999}
+.pcard-btn{display:inline-block;background:var(--az);color:var(--am);font-size:10px;font-weight:700;letter-spacing:.5px;padding:7px 14px;border-radius:8px;text-decoration:none;text-align:center;font-family:'Montserrat',sans-serif;transition:background .18s;margin-top:4px}
+.pcard-btn:hover{background:var(--azs);color:var(--br)}
+.pcard-btn.vazia{background:#dde4ee;color:#999;cursor:default;pointer-events:none}
+.pterr-grupo{margin-bottom:28px}
+.pterr-nome{font-size:13px;font-weight:700;color:var(--br);background:var(--az);padding:10px 16px;border-radius:10px 10px 0 0;font-family:'Montserrat',sans-serif;letter-spacing:.3px}
+.pterr-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;background:var(--br);border:1.5px solid #dde4ee;border-top:none;border-radius:0 0 10px 10px;padding:14px}
+@media(max-width:900px){.pterr-grid{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:600px){.pterr-grid{grid-template-columns:repeat(2,1fr)}}
+
+/* FOOTER */
+.foot{background:var(--az);border-radius:12px;padding:14px 24px;display:flex;align-items:center;justify-content:space-between;margin-top:32px;flex-wrap:wrap;gap:10px}
+.ftxt{color:rgba(255,255,255,.45);font-size:11px}
+.fbadge{background:var(--am);color:var(--az);font-size:11px;font-weight:700;padding:5px 14px;border-radius:20px;font-family:'Montserrat',sans-serif}
+
+@media(max-width:900px){.g4,.g3{grid-template-columns:repeat(2,1fr)}.g2{grid-template-columns:1fr}.hnav{display:none}}
+@media(max-width:480px){.g4,.g3,.g2{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<!-- SENHA -->
+<div id="pwd">
+  <div class="pbox">
+    <img class="plogo-main" src="https://centraldedados-code.github.io/prosperanacional/assets/logo-rede-prospera.png" alt="Prospera Nacional">
+    <div class="psub">Sistema de Monitoramento Operacional</div>
+    <div class="phint">Acesso restrito - Coordenação Instituto BR Arte</div>
+    <input class="pin" type="password" id="pf" placeholder="Senha de acesso"
+           onkeydown="if(event.key==='Enter')chkPwd()">
+    <button class="pbtn" onclick="chkPwd()">ACESSAR SISTEMA</button>
+    <div class="perr" id="perr"></div>
+  </div>
+  <img class="pfoot-logo" src="https://centraldedados-code.github.io/prosperanacional/assets/logo-instituto-br-arte.png" alt="Instituto BR Arte">
+</div>
+
+<!-- LOADING -->
+<div id="ld">
+  <div class="spin"></div>
+  <div class="ltxt">Carregando dados do projeto...</div>
+</div>
+
+<!-- APP -->
+<div id="app">
+  <header class="hdr">
+    <div class="hdri">
+      <div style="display:flex;align-items:center;gap:16px">
+        <img class="hlogo" src="https://centraldedados-code.github.io/prosperanacional/assets/logo-instituto-br-arte.png" alt="Instituto BR Arte">
+        <div class="hdiv"></div>
+        <div>
+          <div class="htit">PROSPERA NACIONAL</div>
+          <div class="hsub">Sistema de Monitoramento Operacional</div>
+        </div>
+      </div>
+      <nav class="hnav">
+        <button class="nbtn on" onclick="goV('dashboard')">Dashboard</button>
+        <button class="nbtn" onclick="goV('territorios')">Territórios</button>
+        <button class="nbtn" onclick="goV('metas')">Metas</button>
+        <button class="nbtn" onclick="goV('pastas')">Pastas Drive</button>
+      </nav>
+    </div>
+  </header>
+
+  <div class="wrap">
+
+    <!-- DASHBOARD -->
+    <div class="vw on" id="vw-dashboard">
+      <div class="st">Visão Geral do Projeto</div>
+      <div class="g4" id="kpi-row" style="margin-bottom:20px"></div>
+
+      <div class="st">Índice Global de Execução</div>
+      <div class="card" style="padding:22px 26px;margin-bottom:20px">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;gap:16px">
+          <div>
+            <div style="font-family:Montserrat,sans-serif;font-size:14px;font-weight:700;color:var(--az)">Prospera Nacional - 11 Territórios - 7 OS (Set/2025 a Mar/2027)</div>
+            <div style="font-size:11px;color:#888;margin-top:3px">Percentual de atividades com evidência depositada, entre as atividades já com pasta criada no Drive</div>
+          </div>
+          <div id="sc-txt" style="font-family:Montserrat,sans-serif;font-size:44px;font-weight:700;color:var(--azs);white-space:nowrap">--</div>
+        </div>
+        <div class="sbw" style="height:22px"><div class="sb" id="bar-g" style="width:0%"></div></div>
+        <div style="display:flex;justify-content:space-between;margin-top:6px;font-size:10px;color:#bbb">
+          <span>0%</span><span>25%</span><span>50%</span><span>75%</span><span>100%</span>
+        </div>
+      </div>
+
+      <div class="st">Execução por Território</div>
+      <div class="g4" id="dash-terr" style="margin-bottom:20px"></div>
+
+      <div class="st">Entregável Geral do Projeto</div>
+      <div id="dash-os3" style="margin-bottom:20px"></div>
+
+      <div class="st">Atividades Aguardando Estrutura no Drive</div>
+      <div id="dash-semlink" style="margin-bottom:8px"></div>
+    </div>
+
+    <!-- TERRITORIOS -->
+    <div class="vw" id="vw-territorios">
+      <div id="tlist">
+        <div class="st">Selecione um Território</div>
+        <div class="g4" id="lista-terr"></div>
+      </div>
+      <div id="tdetalhe" style="display:none">
+        <button class="back" onclick="voltarLista()">Voltar aos Territórios</button>
+        <div id="det-content"></div>
+      </div>
+    </div>
+
+    <!-- METAS -->
+    <div class="vw" id="vw-metas">
+      <div class="st">Acompanhamento de Metas e Indicadores</div>
+      <div class="fbar" id="flt-metas"></div>
+      <div id="tbl-metas"></div>
+    </div>
+
+    <!-- PASTAS DRIVE -->
+    <div class="vw" id="vw-pastas">
+      <div class="st">Pastas de Evidências no Google Drive</div>
+      <div style="font-size:12px;color:#888;margin-bottom:20px">Clique em ABRIR PASTA para acessar a pasta da atividade no Drive. Links preenchidos automaticamente na aba ATIVIDADES da planilha.</div>
+      <div id="pastas-content"></div>
+    </div>
+
+    <div class="foot">
+      <div class="ftxt">Prospera Nacional - Instituto BR Arte x Sebrae Nacional - 18 meses - 11 territórios</div>
+      <div class="fbadge">Monitoramento Operacional</div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ─────────────────────────────────────────────
+// CONSTANTES
+// ─────────────────────────────────────────────
+var SENHA = 'Brarte@2026';
+
+// Cole aqui a URL do Web App (termina em /exec)
+var APPS_SCRIPT_URL = 'https://script.google.com/a/macros/institutobrarte.org/s/AKfycbxOXr2XT1LGd8THrTKX_xZWxvrWyVByW3RbCLp_MiqVNRijujIuZpjz6-f_TqFJw8yfKg/exec';
+
+var TERRITORIOS_PRINCIPAIS = [
+  'RS - PORTO ALEGRE',
+  'PA - BELEM',
+  'PI - TERESINA',
+  'MA - SAO LUIS',
+  'GO - GOIANIA',
+  'AL - MACEIO',
+  'RJ - RIO DE JANEIRO',
+  'SE - ARACAJU',
+  'DF - BRASILIA',
+  'SC - FLORIANOPOLIS'
+];
+var TERRITORIO_AMAPA = 'AMAPA - MACAPA (COMPLEMENTAR)';
+var TERR = TERRITORIOS_PRINCIPAIS.concat([TERRITORIO_AMAPA]);
+
+var OS_LABELS = {
+  'OS1': 'OS 1 - Diagnóstico e Perfil de Empreendimentos',
+  'OS2': 'OS 2 - Mapeamento de Empreendimentos',
+  'OS3': 'OS 3 - Caderno de Acessibilidade',
+  'OS4': 'OS 4 - Seminários de Formação',
+  'OS5': 'OS 5 - Oficinas de Capacitação Técnica',
+  'OS6': 'OS 6 - Palestras Comunitárias',
+  'OS7': 'OS 7 - Consultorias Coletivas'
+};
+
+var D = null;
+
+// ─────────────────────────────────────────────
+// AUTH
+// ─────────────────────────────────────────────
+function chkPwd() {
+  var v = document.getElementById('pf').value;
+  if (v === SENHA) {
+    document.getElementById('pwd').classList.add('off');
+    sessionStorage.setItem('pn_ok', '1');
+    carregarApp();
+  } else {
+    document.getElementById('perr').textContent = 'Senha incorreta. Verifique com a coordenação.';
+    document.getElementById('pf').value = '';
+    document.getElementById('pf').focus();
+  }
+}
+
+// ─────────────────────────────────────────────
+// CARGA DE DADOS
+// ─────────────────────────────────────────────
+function carregarApp() {
+  document.getElementById('ld').classList.add('on');
+
+  if (!APPS_SCRIPT_URL || APPS_SCRIPT_URL === 'COLE_A_URL_DO_WEB_APP_AQUI') {
+    document.getElementById('ld').classList.remove('on');
+    document.getElementById('app').classList.add('on');
+    D = {config:{},atividades:[],metas:[]};
+    alert('Atenção: preencha a constante APPS_SCRIPT_URL no início do script com a URL do Web App.');
+    renderAll();
+    return;
+  }
+
+  fetch(APPS_SCRIPT_URL + '?action=api')
+    .then(function(resp) {
+      if (!resp.ok) throw new Error('HTTP ' + resp.status);
+      return resp.json();
+    })
+    .then(function(data) {
+      D = data;
+      document.getElementById('ld').classList.remove('on');
+      document.getElementById('app').classList.add('on');
+      renderAll();
+    })
+    .catch(function(err) {
+      D = {config:{},atividades:[],metas:[]};
+      document.getElementById('ld').classList.remove('on');
+      document.getElementById('app').classList.add('on');
+      renderAll();
+      console.error('Erro ao carregar dados:', err);
+    });
+}
+
+// ─────────────────────────────────────────────
+// NAVEGACAO
+// ─────────────────────────────────────────────
+function goV(v) {
+  document.querySelectorAll('.vw').forEach(function(e){e.classList.remove('on')});
+  document.querySelectorAll('.nbtn').forEach(function(e){e.classList.remove('on')});
+  document.getElementById('vw-'+v).classList.add('on');
+  document.querySelectorAll('.nbtn').forEach(function(e){
+    if ((e.getAttribute('onclick')||'').indexOf("'"+v+"'") !== -1) e.classList.add('on');
+  });
+}
+
+function voltarLista() {
+  document.getElementById('tlist').style.display = 'block';
+  document.getElementById('tdetalhe').style.display = 'none';
+}
+
+function abrirTerr(idx) {
+  document.getElementById('tlist').style.display = 'none';
+  document.getElementById('tdetalhe').style.display = 'block';
+  renderDetalhe(idx);
+}
+
+// ─────────────────────────────────────────────
+// UTILIDADES
+// ─────────────────────────────────────────────
+function AT() { return (D && D.atividades) ? D.atividades : []; }
+function MT() { return (D && D.metas) ? D.metas : []; }
+
+function atividadesTerritorio(nome) {
+  return AT().filter(function(r){ return r['Territorio'] === nome; });
+}
+
+function bcl(st) {
+  if (!st) return 'bP';
+  var s = st.toLowerCase();
+  if (s === 'realizado') return 'bR';
+  if (s === 'critico') return 'bC';
+  if (s === 'em andamento') return 'bE';
+  return 'bP';
+}
+
+function scl(n) {
+  if (n >= 75) return 'shi';
+  if (n >= 40) return 'smid';
+  if (n >= 10) return 'slow';
+  return 'scrit';
+}
+
+function scT(nome) {
+  var rows = atividadesTerritorio(nome);
+  if (!rows.length) return 0;
+  var realizadas = rows.filter(function(r){ return (r['Status da Atividade']||'').trim() === 'Realizado'; }).length;
+  return Math.round((realizadas / rows.length) * 100);
+}
+
+function scG() {
+  var rows = AT().filter(function(r){ return r['Territorio'] !== 'Projeto Inteiro'; });
+  if (!rows.length) return 0;
+  var realizadas = rows.filter(function(r){ return (r['Status da Atividade']||'').trim() === 'Realizado'; }).length;
+  return Math.round((realizadas / rows.length) * 100);
+}
+
+function fd(v) { return (v && v !== '' && v !== '0') ? String(v) : '-'; }
+
+function encTerr(t) {
+  return t.replace(/'/g, "\\'");
+}
+
+// ─────────────────────────────────────────────
+// RENDER ALL
+// ─────────────────────────────────────────────
+function renderAll() {
+  renderDash();
+  renderListaT();
+  renderMetas();
+  renderPastas();
+}
+
+// ─────────────────────────────────────────────
+// DASHBOARD
+// ─────────────────────────────────────────────
+function kpi(n,l) {
+  return '<div class="kpi"><div class="knum">'+n+'</div><div class="klab">'+l+'</div></div>';
+}
+
+function renderDash() {
+  var rows = AT().filter(function(r){ return r['Territorio'] !== 'Projeto Inteiro'; });
+  var real = rows.filter(function(r){ return (r['Status da Atividade']||'') === 'Realizado'; }).length;
+  var semLink = rows.filter(function(r){ return !(r['Link da Pasta Drive']||'').trim(); }).length;
+
+  document.getElementById('kpi-row').innerHTML =
+    kpi(TERR.length,'Territórios Ativos') +
+    kpi(scG()+'%','Execução Global') +
+    kpi(real+' / '+rows.length,'Atividades Realizadas') +
+    kpi(semLink,'Aguardando Pasta no Drive');
+
+  var sg = scG();
+  document.getElementById('sc-txt').textContent = sg + '%';
+  var bg = document.getElementById('bar-g');
+  bg.style.width = sg + '%';
+  bg.className = 'sb ' + scl(sg);
+
+  var th = '';
+  TERR.forEach(function(t,i){
+    var sc = scT(t);
+    var rowsT = atividadesTerritorio(t);
+    var realT = rowsT.filter(function(r){ return (r['Status da Atividade']||'') === 'Realizado'; }).length;
+    th += '<div class="tcard" onclick="goV(\'territorios\');setTimeout(function(){abrirTerr('+i+')},120)">';
+    th += '<div class="tnome">'+t+'</div>';
+    th += '<div class="tsc">'+sc+'%</div>';
+    th += '<div class="tmeta">'+realT+' de '+rowsT.length+' atividades</div>';
+    th += '<div style="margin:8px 0"><div class="sbw" style="height:8px"><div class="sb '+scl(sc)+'" style="width:'+sc+'%"></div></div></div>';
+    th += '</div>';
+  });
+  document.getElementById('dash-terr').innerHTML = th;
+
+  // OS3 - entregavel geral
+  var os3 = AT().filter(function(r){ return r['OS'] === 'OS3'; })[0];
+  var os3h = '';
+  if (os3) {
+    var st3 = os3['Status da Atividade'] || 'Pendente';
+    os3h += '<div class="card" style="display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap">';
+    os3h += '<div><div style="font-family:Montserrat,sans-serif;font-size:13px;font-weight:700;color:var(--az)">Caderno de Acessibilidade (OS 3)</div>';
+    os3h += '<div style="font-size:11px;color:#888;margin-top:3px">Entregável único do projeto - recomendações de acessibilidade para os espaços físicos de formação</div></div>';
+    os3h += '<div style="display:flex;align-items:center;gap:12px">';
+    os3h += '<span class="badge '+bcl(st3)+'">'+st3+'</span>';
+    if (os3['Link da Pasta Drive']) os3h += '<a class="tlink" style="margin-top:0" href="'+os3['Link da Pasta Drive']+'" target="_blank">Abrir pasta</a>';
+    os3h += '</div></div>';
+  } else {
+    os3h = '<div class="card" style="color:#666;font-size:13px">Dado da OS 3 ainda não disponível.</div>';
+  }
+  document.getElementById('dash-os3').innerHTML = os3h;
+
+  // Atividades sem link
+  var slRows = rows.filter(function(r){ return !(r['Link da Pasta Drive']||'').trim(); });
+  var slh = '';
+  if (!slRows.length) {
+    slh = '<div class="card" style="color:#666;font-size:13px">Todas as atividades já têm pasta vinculada no Drive.</div>';
+  } else {
+    slh += '<div class="abox"><div class="atit">'+slRows.length+' atividade(s) aguardando criação da pasta no Drive</div></div>';
+    slh += '<div class="card" style="padding:0;overflow:auto"><table class="tbl">';
+    slh += '<tr><th>Território</th><th>OS</th><th>Atividade</th><th>Observação</th></tr>';
+    slRows.forEach(function(r){
+      slh += '<tr><td><strong>'+(r['Territorio']||'-')+'</strong></td>';
+      slh += '<td><span class="badge bA">'+(r['OS']||'-')+'</span></td>';
+      slh += '<td>'+(r['Atividade']||'-')+'</td>';
+      slh += '<td style="font-size:11px;color:#888">'+(r['Observacao']||'-')+'</td></tr>';
+    });
+    slh += '</table></div>';
+  }
+  document.getElementById('dash-semlink').innerHTML = slh;
+}
+
+// ─────────────────────────────────────────────
+// LISTA DE TERRITORIOS
+// ─────────────────────────────────────────────
+function renderListaT() {
+  var h = '';
+  TERR.forEach(function(t,i){
+    var sc = scT(t);
+    var rowsT = atividadesTerritorio(t);
+    var realT = rowsT.filter(function(r){ return (r['Status da Atividade']||'') === 'Realizado'; }).length;
+    h += '<div class="tcard" onclick="abrirTerr('+i+')">';
+    h += '<div class="tnome">'+t+'</div>';
+    h += '<div class="tsc">'+sc+'%</div>';
+    h += '<div class="tmeta">'+realT+' de '+rowsT.length+' atividades realizadas</div>';
+    h += '<div style="margin:10px 0"><div class="sbw" style="height:8px"><div class="sb '+scl(sc)+'" style="width:'+sc+'%"></div></div></div>';
+    h += '<div class="tlink">Ver OS e evidências -&gt;</div>';
+    h += '</div>';
+  });
+  document.getElementById('lista-terr').innerHTML = h;
+}
+
+// ─────────────────────────────────────────────
+// DETALHE DE TERRITORIO
+// ─────────────────────────────────────────────
+function renderDetalhe(idx) {
+  var nome = TERR[idx];
+  var tR = atividadesTerritorio(nome);
+  var sc = scT(nome);
+  var rl = tR.filter(function(r){ return (r['Status da Atividade']||'') === 'Realizado'; }).length;
+  var h = '';
+
+  h += '<div class="card" style="background:var(--az);padding:22px 26px;margin-bottom:20px">';
+  h += '<div style="font-size:17px;font-weight:700;color:var(--am);font-family:Montserrat,sans-serif">'+nome+'</div>';
+  h += '<div style="font-size:12px;color:rgba(255,255,255,.6);margin-top:4px">Monitoramento por OS - Set/2025 a Mar/2027</div>';
+  h += '<div style="margin-top:14px;display:flex;align-items:center;gap:16px;flex-wrap:wrap">';
+  h += '<div style="font-size:40px;font-weight:700;color:var(--br);font-family:Montserrat,sans-serif">'+sc+'%</div>';
+  h += '<div style="flex:1;min-width:160px">';
+  h += '<div class="sbw" style="height:14px"><div class="sb '+scl(sc)+'" style="width:'+sc+'%"></div></div>';
+  h += '<div style="color:rgba(255,255,255,.5);font-size:11px;margin-top:4px">'+rl+' de '+tR.length+' atividades realizadas</div>';
+  h += '</div></div></div>';
+
+  // Agrupar atividades por OS
+  var porOS = {};
+  tR.forEach(function(r){
+    var os = r['OS'] || '-';
+    if (!porOS[os]) porOS[os] = [];
+    porOS[os].push(r);
+  });
+
+  h += '<div class="st">Atividades por OS</div>';
+  Object.keys(porOS).sort().forEach(function(os){
+    var lista = porOS[os];
+    var realOS = lista.filter(function(r){ return (r['Status da Atividade']||'') === 'Realizado'; }).length;
+    h += '<div style="margin-bottom:18px">';
+    h += '<div style="font-size:12px;font-weight:700;color:var(--az);font-family:Montserrat,sans-serif;margin-bottom:8px">'+(OS_LABELS[os]||os)+' <span style="color:#999;font-weight:400">('+realOS+' de '+lista.length+')</span></div>';
+    h += '<div class="g3">';
+    lista.forEach(function(r){
+      var st = r['Status da Atividade'] || 'Pendente';
+      h += '<div class="oscard st'+st.charAt(0)+'">';
+      h += '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px">';
+      h += '<div class="osnome">'+(r['Atividade']||'-')+'</div>';
+      h += '<span class="badge '+bcl(st)+'">'+st+'</span></div>';
+      if (r['Link da Pasta Drive']) h += '<a class="oslink" href="'+r['Link da Pasta Drive']+'" target="_blank">Abrir pasta no Drive</a>';
+      else h += '<div style="font-size:11px;color:#ccc;margin-top:6px">'+(r['Observacao']||'Sem link registrado')+'</div>';
+      h += '</div>';
+    });
+    h += '</div></div>';
+  });
+
+  // Metas do territorio
+  var metT = MT().filter(function(m){ return m['Territorio'] === nome; });
+  if (metT.length) {
+    h += '<div class="st">Metas neste Território</div>';
+    h += '<div class="card" style="padding:0;overflow:auto;margin-bottom:24px"><table class="tbl">';
+    h += '<tr><th>OS</th><th>Meta</th><th>Previsto</th><th>Realizado</th><th>%</th><th>Status</th></tr>';
+    metT.forEach(function(m){
+      var pT = parseFloat(m['Quantidade Prevista por Territorio']) || 0;
+      var rv = parseFloat(m['Quantidade Realizada']) || 0;
+      var pc = pT > 0 ? Math.round((rv/pT)*100) : 0;
+      h += '<tr><td><span class="badge bT">'+(m['OS']||'-')+'</span></td>';
+      h += '<td style="max-width:260px"><strong>'+(m['Descricao da Meta']||'-')+'</strong></td>';
+      h += '<td style="text-align:center">'+(pT||'sem meta fixa')+'</td>';
+      h += '<td style="text-align:center">'+rv+'</td>';
+      h += '<td style="min-width:90px">'+(pT>0?('<div class="sbw" style="height:6px;margin-bottom:2px"><div class="sb '+scl(pc)+'" style="width:'+Math.min(pc,100)+'%"></div></div><span style="font-size:10px;color:#888">'+pc+'%</span>'):'<span style="font-size:10px;color:#aaa">-</span>')+'</td>';
+      h += '<td><span class="badge '+bcl(m['Status']||'Pendente')+'">'+(m['Status']||'Pendente')+'</span></td></tr>';
+    });
+    h += '</table></div>';
+  }
+
+  document.getElementById('det-content').innerHTML = h;
+}
+
+// ─────────────────────────────────────────────
+// METAS
+// ─────────────────────────────────────────────
+function renderMetas(fTerr) {
+  fTerr = fTerr || 'Todos';
+  var metas = MT();
+  var fb = '<button class="fbtn'+(fTerr==='Todos'?' on':'')+'" onclick="renderMetas(\'Todos\')">Todos</button>';
+  TERR.forEach(function(t){
+    var ts = t.length>16 ? t.substring(0,16)+'...' : t;
+    fb += '<button class="fbtn'+(fTerr===t?' on':'')+'" onclick="renderMetas(\''+encTerr(t)+'\')">'+ts+'</button>';
+  });
+  fb += '<button class="fbtn'+(fTerr==='Projeto Inteiro'?' on':'')+'" onclick="renderMetas(\'Projeto Inteiro\')">Projeto Inteiro</button>';
+  document.getElementById('flt-metas').innerHTML = fb;
+
+  var fil = fTerr==='Todos' ? metas : metas.filter(function(m){ return m['Territorio']===fTerr; });
+  if (!fil.length) {
+    document.getElementById('tbl-metas').innerHTML='<div class="card" style="color:#666;font-size:13px">Nenhuma meta registrada para este filtro.</div>';
+    return;
+  }
+  var h = '<div class="card" style="padding:0;overflow:auto"><table class="tbl">';
+  h += '<tr><th>ID</th><th>OS</th><th>Meta</th><th>Território</th><th>Total Projeto</th><th>Por Território</th><th>Realizado</th><th>Progresso</th><th>Status</th></tr>';
+  fil.forEach(function(m){
+    var pT = parseFloat(m['Quantidade Prevista Total (Projeto)'])||0;
+    var pP = parseFloat(m['Quantidade Prevista por Territorio'])||0;
+    var rv = parseFloat(m['Quantidade Realizada'])||0;
+    var base = pP||pT;
+    var pc = base>0 ? Math.round((rv/base)*100) : 0;
+    h += '<tr>';
+    h += '<td><strong>'+(m['ID Meta']||'-')+'</strong></td>';
+    h += '<td><span class="badge bT">'+(m['OS']||'-')+'</span></td>';
+    h += '<td style="max-width:220px">'+(m['Descricao da Meta']||'-')+'</td>';
+    h += '<td style="white-space:nowrap">'+(m['Territorio']||'-')+'</td>';
+    h += '<td style="text-align:center">'+(pT||'-')+'</td>';
+    h += '<td style="text-align:center">'+(pP||'sem meta fixa')+'</td>';
+    h += '<td style="text-align:center">'+rv+'</td>';
+    h += '<td style="min-width:100px">'+(base>0?('<div class="sbw" style="height:6px;margin-bottom:2px"><div class="sb '+scl(pc)+'" style="width:'+Math.min(pc,100)+'%"></div></div><span style="font-size:10px;color:#888">'+pc+'%</span>'):'<span style="font-size:10px;color:#aaa">-</span>')+'</td>';
+    h += '<td><span class="badge '+bcl(m['Status']||'Pendente')+'">'+(m['Status']||'Pendente')+'</span></td>';
+    h += '</tr>';
+  });
+  h += '</table></div>';
+  document.getElementById('tbl-metas').innerHTML = h;
+}
+
+// ─────────────────────────────────────────────
+// PASTAS DRIVE
+// ─────────────────────────────────────────────
+function renderPastas() {
+  var html = '';
+
+  TERR.forEach(function(terr) {
+    var rowsT = atividadesTerritorio(terr);
+    if (!rowsT.length) return;
+    html += '<div class="pterr-grupo">';
+    html += '<div class="pterr-nome">' + terr + '</div>';
+    html += '<div class="pterr-grid">';
+    rowsT.forEach(function(r) {
+      var st = r['Status da Atividade'] || 'Pendente';
+      var lk = r['Link da Pasta Drive'] || '';
+      html += '<div class="pcard st' + st.charAt(0) + '">';
+      html += '<div style="display:flex;align-items:center;justify-content:space-between;gap:4px">';
+      html += '<div class="pcard-os">' + (r['OS']||'-') + '</div>';
+      html += '<span class="badge ' + bcl(st) + '" style="font-size:9px;padding:2px 7px">' + st + '</span>';
+      html += '</div>';
+      html += '<div class="pcard-ativ">' + (r['Atividade']||'-') + '</div>';
+      if (lk) {
+        html += '<a class="pcard-btn" href="' + lk + '" target="_blank">ABRIR PASTA</a>';
+      } else {
+        html += '<span class="pcard-btn vazia">SEM LINK</span>';
+      }
+      html += '</div>';
+    });
+    html += '</div></div>';
+  });
+
+  // OS3 - entregavel geral
+  var os3Rows = AT().filter(function(r){ return r['Territorio'] === 'Projeto Inteiro'; });
+  if (os3Rows.length) {
+    html += '<div class="pterr-grupo">';
+    html += '<div class="pterr-nome">Entregável Geral do Projeto</div>';
+    html += '<div class="pterr-grid">';
+    os3Rows.forEach(function(r) {
+      var st = r['Status da Atividade'] || 'Pendente';
+      var lk = r['Link da Pasta Drive'] || '';
+      html += '<div class="pcard st' + st.charAt(0) + '">';
+      html += '<div style="display:flex;align-items:center;justify-content:space-between;gap:4px">';
+      html += '<div class="pcard-os">' + (r['OS']||'-') + '</div>';
+      html += '<span class="badge ' + bcl(st) + '" style="font-size:9px;padding:2px 7px">' + st + '</span>';
+      html += '</div>';
+      html += '<div class="pcard-ativ">' + (r['Atividade']||'-') + '</div>';
+      if (lk) {
+        html += '<a class="pcard-btn" href="' + lk + '" target="_blank">ABRIR PASTA</a>';
+      } else {
+        html += '<span class="pcard-btn vazia">SEM LINK</span>';
+      }
+      html += '</div>';
+    });
+    html += '</div></div>';
+  }
+
+  document.getElementById('pastas-content').innerHTML = html;
+}
+
+// ─────────────────────────────────────────────
+// INIT
+// ─────────────────────────────────────────────
+window.addEventListener('DOMContentLoaded', function(){
+  if (sessionStorage.getItem('pn_ok') === '1') {
+    document.getElementById('pwd').classList.add('off');
+    carregarApp();
+  } else {
+    setTimeout(function(){
+      var f = document.getElementById('pf');
+      if (f) f.focus();
+    }, 100);
+  }
+});
+</script>
+</body>
+</html>
